@@ -57,6 +57,13 @@ def run_line(line):
             used_add.append(mod_name)
         except ImportError: pass
 
+    elif line.startswith("ECHO "):
+        print(line[5:].replace("'", "").replace('"', ''))
+
+    elif line.startswith("BIND "):
+        parts = line[5:].split(" ")
+        bindings[parts[0].strip()] = parts[1].strip()
+
     else:
         if "." in line and "[" in line:
             parts = line.split(".", 1)
@@ -84,6 +91,8 @@ def run_line(line):
 
     for key, target in bindings.items():
         if key in variables: variables[target] = variables[key]
+    
+    print(variables)
 
 while True:
     new_line = input()

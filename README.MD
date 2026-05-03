@@ -40,6 +40,10 @@ More types incoming.
 Use this to output:
 ``OUT varname TYPE``
 
+### Echo
+To print a **literal STRING** use:
+``ECHO "message"``
+
 ### Adds: modules
 You can create your own modules using the guide.
 To add a module, use:
