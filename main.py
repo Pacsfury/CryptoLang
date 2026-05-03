@@ -12,8 +12,8 @@ def run_line(line):
 
     if "->" in line:
         parts = line.split("->")
-        var_name = parts[1].strip()
-        user_input = input(parts[0].strip().replace('"', ''))
+        var_name = parts[0].strip()
+        user_input = input(parts[1].strip().replace('"', ''))
         variables[var_name] = int("".join(f"{ord(c):03d}" for c in user_input))
 
     elif "<-" in line:
@@ -90,9 +90,8 @@ def run_line(line):
                         variables[target] = res
 
     for key, target in bindings.items():
-        if key in variables: variables[target] = variables[key]
-    
-    print(variables)
+        if key in variables:
+            variables[target] = variables[key]
 
 while True:
     new_line = input()
