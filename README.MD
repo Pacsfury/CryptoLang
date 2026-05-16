@@ -58,22 +58,22 @@ The result of the function will be saved in the ``base`` variable.
 There are two parts of a module: _functions_ and _run function_.
 The _functions_ part if very straighforward: just define them!
 ```python
-def sum(A, B)
-	return a + b
+def sum(A, B):
+	return A + B
 	
 # Rest of the functions
 ```
 And for the _run function_, we use a match case. The run function is made to ensure that every function can be called independently of its number of arguments.
 ```python
 def  run(n, array):
-	args  = [int(i) for  i  in  array
+	args  = [int(i) for  i  in  array]
 
 	a  =  args[0]
 	b  =  args[1]
 
 	match  n:
-		case  "SUM":
-			result  =  SUM(a, b)
+		case  "sum":
+			result  =  sum(a, b)
 			
 	return  result
 ```
