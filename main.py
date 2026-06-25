@@ -1,4 +1,5 @@
 import importlib
+import sys
 
 variables = {}
 bindings = {}
@@ -13,7 +14,8 @@ def run_line(line):
     if "->" in line:
         parts = line.split("->")
         var_name = parts[0].strip()
-        user_input = input(parts[1].strip().replace('"', ''))
+        prompt_text = parts[1].strip().replace('"', '')
+        user_input = input(prompt_text)
         variables[var_name] = int("".join(f"{ord(c):03d}" for c in user_input))
 
     elif "<-" in line:
@@ -55,7 +57,8 @@ def run_line(line):
         try:
             modules[mod_name] = importlib.import_module(f"add.{mod_name}")
             used_add.append(mod_name)
-        except ImportError: pass
+        except ImportError: 
+            print(f"[Error: module not found add.{mod_name}]")
 
     elif line.startswith("ECHO "):
         print(line[5:].replace("'", "").replace('"', ''))
@@ -93,10 +96,20 @@ def run_line(line):
         if key in variables:
             variables[target] = variables[key]
 
-while True:
-    new_line = input()
-    if new_line == "/RUN": break
-    code.append(new_line)
-
-for i in code:
-    run_line(i)
+if len(sys.argv) > 1:
+    try:
+        with open(sys.argv[1], 'r', encoding='utf-8') as f:
+            for line in f:
+                run_line(line)
+    except FileNotFoundError:
+        print(f"Error: file doesnt exist: '{sys.argv[1]}'.")
+else:
+    while True:
+        try:
+            new_line = input()
+            if new_line == "/RUN": break
+            code.append(new_line)
+        except EOFError:
+            break
+    for i in code:
+        run_line(i)
